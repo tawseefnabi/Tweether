@@ -1,5 +1,4 @@
 # Tweether
-# Solidity-truffle-Dapp
 ## System requriements
  
 Install  blockchain simulator client [Ganache-CLI](https://github.com/trufflesuite/ganache) like localhost running on default port `8545`
