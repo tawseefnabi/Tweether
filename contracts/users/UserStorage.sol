@@ -2,7 +2,7 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 contract UserStorage {
-  mapping(uint => Profile) profiles;
+  mapping(uint => Profile) public profiles;
   struct Profile {
     uint id;
     bytes32 username;
