@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
-contract TweetStorage {
+import "../helpers/BaseStorage.sol";
+
+contract TweetStorage is BaseStorage {
     struct Tweet {
         uint id;
         string content;
@@ -15,7 +17,7 @@ contract TweetStorage {
     //     return tweets[id].content;
     // }
     uint latestTweetId = 0;
-    function createTweet(uint _userId, string memory _text) public returns (uint) {
+    function createTweet(uint _userId, string memory _text) public onlyController returns (uint) {
       latestTweetId++;
       tweets[latestTweetId] = Tweet(latestTweetId, _text, _userId, block.timestamp);
       return latestTweetId;
