@@ -5,12 +5,15 @@ import "truffle/DeployedAddresses.sol";
 import "../../contracts/users/UserStorage.sol";
 
 contract TestUserStorage {
-  function testCreateFirstUser() public {
     // Get the deployed contract
-    UserStorage _storage = UserStorage(DeployedAddresses.UserStorage());
-
-    uint _expectedId = 1;
-
-    Assert.equal(_storage.createUser("tawseef"), _expectedId, "Should create user with ID 1");
-  }
+    UserStorage userStorage ;
+    constructor() public {
+      userStorage = new UserStorage();
+      userStorage.setControllerAddr(address(this));
+    }
+    
+    function testCreateFirstUser() public {
+      uint _expectedId = 1;
+      Assert.equal(userStorage.createUser('tawseef'), _expectedId, "Should create user with ID 1");
+    }
 }
