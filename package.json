@@ -1,0 +1,33 @@
+{
+  "name": "tweether",
+  "version": "1.0.0",
+  "description": "FE for tweether-web3 project",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "next client",
+    "artifacts": "cp -r ./build/contracts ./client/web3/artifacts",
+    "prestart": "npm run artifacts && next build client",
+    "start": "next start client -p $PORT",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tawseefnabi/Tweether.git"
+  },
+  "author": "tawseef ahmad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tawseefnabi/Tweether/issues"
+  },
+  "homepage": "https://github.com/tawseefnabi/Tweether#readme",
+  "dependencies": {
+    "next": "^12.0.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "truffle-contract": "^4.0.31",
+    "web3": "^1.6.1"
+  }
+}
