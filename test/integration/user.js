@@ -35,9 +35,7 @@ contract('users', () => {
     const userStorage = await UserStorage.deployed();
     const userId = 1;
     const userInfo = await userStorage.profiles.call(userId);
-    console.log('userInfo--->',userInfo[1]);
     const username = web3.utils.toAscii(userInfo[1]).replace(/\u0000/g, '')
-    console.log('username', username);
     assert.equal(username, "tawseef")
   })
 })
