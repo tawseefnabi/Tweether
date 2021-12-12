@@ -1,8 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
+import "../helpers/BaseController.sol";
+import "../ContractManager.sol";
+import "./UserStorage.sol";
 
-contract UserController {
-    function test() public returns (uint) {
-        return 1;
+contract UserController is BaseController {
+    function createUser(bytes32 _username) public returns (uint) {
+        ContractManager _manager = ContractManager(managerAddr);
+        address _userStorageAddr = _manager.getAddress("UserStorage");
+       UserStorage _userStorage = UserStorage(_userStorageAddr); 
+
+      return _userStorage.createUser(_username);
     }
 }

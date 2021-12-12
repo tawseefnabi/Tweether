@@ -1,9 +1,25 @@
 const TweetStorage = artifacts.require('TweetStorage');
+const TweetController = artifacts.require('TweetController')
+const utils = require('../utils');
 
+const { assertVMException } =  utils;
 contract ('tweets', () => {
-  before(async() => {
+  it("can't create tweets without controller", async() => {
     const tweetStorage = await TweetStorage.deployed();
-    await tweetStorage.createTweet(1,'Hello World');
+    try {
+      await tweetStorage.createTweet(1,'Hello World');
+      assert.fail();
+    } catch (error) {
+      assertVMException(error);
+      // assert.equal(error.message, 'VM Exception while processing transaction: revert');
+    }
+  })
+  it("can create tweet with controller", async () => {
+    const controller = await TweetController.deployed()
+
+    const tx = await controller.createTweet(1, "Hello World")
+
+    assert.isOk(tx)
   })
   it('can get tweet', async () => {
     const tweetStorage = await TweetStorage.deployed();
