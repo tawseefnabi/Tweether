@@ -7,9 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "dev": "next client",
-    "artifacts": "cp -r ./build/contracts ./client/web3/artifacts",
-    "prestart": "npm run artifacts && next build client",
+    "dev": "npm run artifacts && next client",
+    "artifacts": "cp -r ./build/contracts/ ./client/web3/artifacts",
+    "prestart": "npm run artifacts && next client",
     "start": "next start client -p $PORT",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
