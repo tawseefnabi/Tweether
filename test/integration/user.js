@@ -7,7 +7,14 @@ contract('users', () => {
     const userStorage = await UserStorage.deployed();
     try {
       const username = web3.utils.fromAscii('tawseef');
-      await userStorage.createUser(username);
+      await userStorage.createUser(
+        0x0,
+        username,
+        "Tawseef",
+        "Bhat",
+        "i love programming",
+        "tawseef@gmail.com"
+        );
       assert.fail();
     } catch (err) {
       // console.log('error', err);
@@ -18,7 +25,13 @@ contract('users', () => {
     const userStorage = await UserStorage.deployed();
     try {
       const username = web3.utils.fromAscii('tawseef');
-      const tx =await userStorage.createUser(username);
+      const tx =await userStorage.createUser(
+        'tawseef',
+        "Tawseef",
+        "Bhat",
+        "i love programming",
+        "tawseef@gmail.com"
+      );
       assert.isOk(tx);
     } catch (err) {
       // console.log('error', err);

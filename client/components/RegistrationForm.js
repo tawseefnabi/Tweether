@@ -1,13 +1,13 @@
 import React from 'react'
 import Button from "./Button"
-
-const Input = ({ title, value, onChange }) => (
+import { createUser } from "../web3/users"
+const Input = ({ title, name, value, onChange }) => (
   <div>
     <label>
       {title}
     </label>
 
-    <input value={value} onChange={onChange} />
+    <input name={name} value={value} onChange={onChange} />
 
     <style jsx>{`
       div {
@@ -46,13 +46,33 @@ export default class RegistrationForm extends React.Component {
     firstName: "",
     lastName: "",
     username: "",
-    gravatarEmail: "",
     bio: "",
+    gravatarEmail: ""
   }  
-  updateField = (field, e) => {
+ 
+  updateField = (event) => {
+    const field = event.target.name;
     const newState = {};
-    newState[field] = e.target.value;
+    newState[field] = event.target.value;
     this.setState(newState);
+  }
+  createUserFunc = async (e) => {
+    e.preventDefault();
+    // some quick validation checks
+    for (let key in this.state) {
+      if (!this.state[key]) {
+        return alert(`you must  fill in your ${key}!`);
+      }
+    }
+    const {firstName, lastName, username, bio, gravatarEmail} = this.state;
+    const user = await createUser(firstName, lastName, username, bio, gravatarEmail);
+    try {
+      // open the MetaMask modal
+      await createUser(username, firstName, lastName, bio, gravatarEmail)
+      alert('User created successfully!')
+    } catch (error) {
+      console.log("error in createUser:",error);
+    }
   }
   render() {
     const {onClose} = this.props;
@@ -61,26 +81,31 @@ export default class RegistrationForm extends React.Component {
         <h3> Create your accoubt</h3>
         <Input 
         title="First Name"
-        onChange={ e => this.updateField.bind("firstName", e)}
+        name="firstName"
+        onChange={this.updateField}
         />
          <Input 
         title="Last Name"
-        onChange={ e => this.updateField.bind("lastName", e)}
+        name="lastName"
+        onChange={this.updateField}
         />
          <Input 
         title="Desired Name"
-        onChange={ e => this.updateField.bind("username", e)}
-        />
-         <Input 
-        title="Gravatar  Email"
-        onChange={ e => this.updateField.bind("gravatarEmail", e)}
+        name="username"
+        onChange={this.updateField}
         />
          <Input 
         title="Bio"
-        onChange={ e => this.updateField.bind("bio", e)}
+        name="bio"
+        onChange={this.updateField}
+        />
+         <Input 
+        title="Gravatar  Email"
+        name="gravatarEmail"
+        onChange={this.updateField}
         />
         <footer>
-          <Button onClick={this.createUser}>
+          <Button onClick={this.createUserFunc}>
             Create
           </Button>
         </footer>

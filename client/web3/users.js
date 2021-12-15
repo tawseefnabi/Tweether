@@ -15,7 +15,7 @@ export const getUserInfo = async (userId) => {
 }
 
 // create user function
-export const createUser = async (username) => {
+export const createUser = async (...params) => {
     const controller = await getInstance(UserController)
     try {
       // check etheruem is enabled
@@ -23,8 +23,19 @@ export const createUser = async (username) => {
       // get eth address
       const address = await eth.getAccounts()
       // create user from user controller
+      const firstName = Web3Utils.asciiToHex(params[0])
+      const lastName = Web3Utils.asciiToHex(params[1])
+      const username = Web3Utils.asciiToHex(params[2])
+      const bio = params[3]
+      const gravatarEmail = params[4]
+      
+        
       const user = await controller.createUser(
-        Web3Utils.fromAscii(username),
+        firstName,
+        lastName,
+        username,
+        bio,
+        gravatarEmail,
         {from :address[0]}
         )
       return user
