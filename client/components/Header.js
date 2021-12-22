@@ -3,9 +3,13 @@ import Link from "next/link"
 
 import { Center } from "./Layout"
 import Logotype from "../icons/logotype.svg"
-
+// import { getLoggedInUserId } from "../web3/users"
 export default class Header extends React.Component {
+  // async componentDidMount() {
+  //   const userId = await getLoggedInUserId() 
 
+  //   console.log("Logged in as", userId)
+  // }
   render() {
     return (
       <header>
