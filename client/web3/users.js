@@ -13,6 +13,21 @@ export const getUserInfo = async (userId) => {
     username: Web3Utils.toAscii(username).replace(/\u0000/g, '')
   }  
 }
+// export const getLoggedInUserId = async () => {
+//   try {
+//     await ethereum.enable()
+//     const addresses = await eth.getAccounts()
+
+//     if (!addresses) return
+
+//     const storage = await getInstance(UserStorage)
+//     const userId = await storage.addresses.call(addresses[0])
+
+//     return parseInt(userId)
+//   } catch (err) {
+//     console.error("Err: in user storage", err)
+//   }
+// }
 
 // create user function
 export const createUser = async (...params) => {
