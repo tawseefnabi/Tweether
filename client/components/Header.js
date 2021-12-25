@@ -3,14 +3,30 @@ import Link from "next/link"
 
 import { Center } from "./Layout"
 import Logotype from "../icons/logotype.svg"
+import { getLoggedInUserId , getUserInfo} from "../web3/users"
+import Nav from "./Nav"
 // import { getLoggedInUserId } from "../web3/users"
 export default class Header extends React.Component {
-  // async componentDidMount() {
-  //   const userId = await getLoggedInUserId() 
+  state = {
+    loggedIn: false,
+    userInfo: {}
+  }
+  async componentDidMount() {
+    const userId = await getLoggedInUserId() 
 
-  //   console.log("Logged in as", userId)
-  // }
+    try {
+      const userInfo = await getUserInfo(userId) 
+
+      this.setState({
+        loggedIn: true,
+        userInfo,
+      })
+    } catch (err) {
+      console.error("Couldn't find logged in user", err)
+    }
+  }
   render() {
+    const { loggedIn, userInfo } = this.state
     return (
       <header>
         <Center>
@@ -19,6 +35,13 @@ export default class Header extends React.Component {
               {/* <Logotype /> */}
             </a>
           </Link>
+          <nav>
+            {loggedIn && (
+              <Nav
+                userInfo={userInfo}
+              />
+            )}
+          </nav>
         </Center>
 
         <style jsx>{`

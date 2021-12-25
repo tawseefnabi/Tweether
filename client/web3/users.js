@@ -4,30 +4,54 @@ import UserStorage  from '../web3/artifacts/UserStorage.json'
 import UserController from "../web3/artifacts/UserController.json"
 
 
+// export const getUserInfo = async (userId) => {
+//   const storage = await getInstance(UserStorage)
+//   const {id, username} = await storage.profiles.call(userId)
+
+//   return {
+//     id:parseInt(id),
+//     username: Web3Utils.toAscii(username).replace(/\u0000/g, '')
+//   }  
+// }
+export const getLoggedInUserId = async () => {
+  try {
+    await ethereum.enable()
+    const addresses = await eth.getAccounts()
+
+    if (!addresses) return
+
+    const storage = await getInstance(UserStorage)
+    const userId = await storage.addresses.call(addresses[0])
+
+    return parseInt(userId)
+  } catch (err) {
+    console.error("Err: in user storage", err)
+  }
+}
 export const getUserInfo = async (userId) => {
   const storage = await getInstance(UserStorage)
-  const {id, username} = await storage.profiles.call(userId)
+  const profile = await storage.profiles.call(userId)
+
+  const {
+    id, 
+    username, 
+    firstName, 
+    lastName, 
+    bio, 
+    gravatarEmail, 
+  } = profile
+  
+  if (!parseInt(id)) throw "Couldn't find user!"
 
   return {
-    id:parseInt(id),
-    username: Web3Utils.toAscii(username).replace(/\u0000/g, '')
-  }  
+    id: parseInt(id),
+    username: eth.utils.toAscii(username),
+    firstName: eth.utils.toAscii(firstName),
+    lastName: eth.utils.toAscii(lastName),
+    bio,
+    gravatarEmail,
+  }
 }
-// export const getLoggedInUserId = async () => {
-//   try {
-//     await ethereum.enable()
-//     const addresses = await eth.getAccounts()
-
-//     if (!addresses) return
-
-//     const storage = await getInstance(UserStorage)
-//     const userId = await storage.addresses.call(addresses[0])
-
-//     return parseInt(userId)
-//   } catch (err) {
-//     console.error("Err: in user storage", err)
-//   }
-// }
 
 // create user function
 export const createUser = async (...params) => {
