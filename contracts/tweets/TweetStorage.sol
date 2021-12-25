@@ -10,8 +10,8 @@ contract TweetStorage is BaseStorage {
         uint userId;
         uint timestamp;
     }
-
     mapping(uint => Tweet) public tweets;
+    mapping (uint => uint[]) userTweetIds;
      // commenting getTweet function, as public in  tweets does same
     // function getTweet(uint id) public view returns (string) {
     //     return tweets[id].content;
@@ -20,6 +20,10 @@ contract TweetStorage is BaseStorage {
     function createTweet(uint _userId, string memory _text) public onlyController returns (uint) {
       latestTweetId++;
       tweets[latestTweetId] = Tweet(latestTweetId, _text, _userId, block.timestamp);
+      userTweetIds[_userId].push(latestTweetId); 
       return latestTweetId;
     }
+    function getTweetIdsFromUser(uint _userId) view public returns( uint[] memory ) {
+    return userTweetIds[_userId];
+  }
 }
