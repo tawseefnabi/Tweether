@@ -36,4 +36,3 @@ Install  blockchain simulator client [Ganache-CLI](https://github.com/trufflesui
  ```sh 
  npm install -g truffle
  ```
-[learn from here](http://www.ludu.co/course/ethereum/)
